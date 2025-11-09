@@ -7,15 +7,15 @@ import (
 	"strings"
 )
 
-type Writer struct {
+type FileWriter struct {
 	templateFile *os.File
 }
 
-func (w Writer) WriteLine(str string) {
+func (w FileWriter) WriteLine(str string) {
 	w.templateFile.WriteString(str + "\n")
 }
 
-func (w Writer) WriteHeading(str string, headingType int) {
+func (w FileWriter) WriteHeading(str string, headingType int) {
 	var LOWER_HEADING_LIMIT = 1;
 	var UPPER_HEADING_LIMIT = 6;
 
@@ -28,7 +28,7 @@ func (w Writer) WriteHeading(str string, headingType int) {
 	w.templateFile.WriteString(heading + " " + str + "\n");
 }
 
-func (w Writer) WriteCodeBlock(codeBlock []string) {
+func (w FileWriter) WriteCodeBlock(codeBlock []string) {
 	w.WriteLine("```");
 	for _, code := range codeBlock {
 		w.WriteLine(code);
@@ -36,12 +36,3 @@ func (w Writer) WriteCodeBlock(codeBlock []string) {
 	w.WriteLine("```");
 }
 
-// TODO :  find a good spot for this method.
-func CreateTemplate() *os.File {
-	filePath := "README.md";
-
-	templateFile, err := os.Create(filePath);
-	if err != nil { panic(err); }
-
-	return templateFile;
-}

@@ -2,27 +2,9 @@ package main
 
 import (
 	"os"
-	"path"
 	"strings"
-	"syscall"
 	"testing"
 )
-
-func CreateTestFile(tempDir string) (*os.File, error) {
-	var filePath = path.Join(tempDir, "test.md");
-	template, err := os.Create(filePath);
-	return template, err;
-}
-
-func Test_CreateTemplate(t *testing.T) {
-	template, err := CreateTestFile(t.TempDir());
-	e, ok := err.(*os.PathError);
-	defer template.Close(); 
-	
-	if ok && e.Err == syscall.ENOSPC {
-		t.Errorf("Unable to create file at directory %s", template.Name()); 
-	}
-}
 
 func Test_WriteLine(t *testing.T){
 	template, err := CreateTestFile(t.TempDir());
@@ -31,9 +13,9 @@ func Test_WriteLine(t *testing.T){
 	}
 	defer template.Close();
 
-	var testWriter = Writer{template};
+	var testFileWriter = FileWriter{template};
 	var testLine = "Test line";
-	testWriter.WriteLine(testLine);
+	testFileWriter.WriteLine(testLine);
 	
 	fileContents, err := os.ReadFile(template.Name());
 
