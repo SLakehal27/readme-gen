@@ -6,11 +6,11 @@ import (
 )
 
 type FileCreator struct {
-	fileName string
+	filePath string
 }
 
 func (f FileCreator) CreateTemplate() *os.File {
-	templateFile, err := os.Create(f.fileName);
+	templateFile, err := os.Create(f.filePath);
 	if err != nil { panic(err); }
 	fmt.Printf("Created README file : %s", templateFile.Name());
 	return templateFile;

@@ -9,7 +9,8 @@ import (
 
 func CreateTestFile(tempDir string) (*os.File, error) {
 	var filePath = path.Join(tempDir, "test.md");
-	template, err := os.Create(filePath);
+	var fileCreator = FileCreator{filePath: filePath};
+	template, err := os.Create(fileCreator.filePath);
 	return template, err;
 }
 
