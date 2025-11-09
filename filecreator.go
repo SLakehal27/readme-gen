@@ -19,7 +19,9 @@ func (f FileCreator) CreateTemplate() *os.File {
 func(f FileCreator) WriteDefaultReadme(templateFile *os.File) {
 	var writer = FileWriter{templateFile: templateFile};
 	writer.WritePartialHeading("README Generator ", 1);
-	writer.WriteImage("readme-gen-pipeline", "https://github.com/SLakehal27/readme-gen/actions/workflows/pipeline.yml/badge.svg?branch=main");
+	writer.WriteImageWithRedirect("readme-gen-pipeline", 
+	"https://github.com/SLakehal27/readme-gen/actions/workflows/pipeline.yml/badge.svg?branch=main",
+	"https://github.com/SLakehal27/readme-gen/actions");
 
 	writer.WriteLine("A simple README.md generator made in GoLang to generate README.md files for future GitHub projects.\n\n");
 

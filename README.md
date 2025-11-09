@@ -1,4 +1,4 @@
-# README Generator ![readme-gen-pipeline](https://github.com/SLakehal27/readme-gen/actions/workflows/pipeline.yml/badge.svg?branch=main)
+# README Generator [![readme-gen-pipeline](https://github.com/SLakehal27/readme-gen/actions/workflows/pipeline.yml/badge.svg?branch=main)](https://github.com/SLakehal27/readme-gen/actions)
 
 A simple README.md generator made in GoLang to generate README.md files for future GitHub projects.
 

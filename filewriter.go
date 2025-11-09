@@ -40,8 +40,13 @@ func formatURL(name string, url string) string {
 	return "[" + name + "]" + "(" + url + ")";
 }
 
-func (w FileWriter) WriteImage(name string, url string) {
-	w.WriteLine("!" + formatURL(name, url) + "\n\n");
+func (w FileWriter) WriteImage(name string, imageUrl string) {
+	w.WriteLine("!" + formatURL(name, imageUrl) + "\n\n");
+}
+
+func (w FileWriter) WriteImageWithRedirect(name string, imageUrl string, redirectUrl string) {
+	var imageLine = "!" + formatURL(name, imageUrl);
+	w.WriteLine(formatURL(imageLine, redirectUrl) + "\n\n");
 }
 
 func (w FileWriter) WriteCodeBlock(codeBlock []string, language string) {
