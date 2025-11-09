@@ -6,6 +6,18 @@ import (
 	"testing"
 )
 
+func validateLine(t *testing.T, filePath string, testLine string) {
+	fileContents, err := os.ReadFile(filePath);
+
+	if err != nil {
+		t.Errorf("Unable to read file at directory %s", filePath);
+	}
+
+	if (!strings.Contains(string(fileContents), testLine)) {
+		t.Errorf("%s does not contain the line %s", filePath, testLine)
+	}
+}
+
 func Test_WriteLine(t *testing.T){
 	template, err := CreateTestFile(t.TempDir());
 	if err != nil {
@@ -16,16 +28,8 @@ func Test_WriteLine(t *testing.T){
 	var testFileWriter = FileWriter{template};
 	var testLine = "Test line";
 	testFileWriter.WriteLine(testLine);
-	
-	fileContents, err := os.ReadFile(template.Name());
 
-	if err != nil {
-		t.Errorf("Unable to read file at directory %s", template.Name());
-	}
-
-	if (!strings.Contains(string(fileContents), testLine)){
-		t.Errorf("%s does not contain the line %s", template.Name(), testLine)
-	}
+	validateLine(t, template.Name(), testLine);
 }
 
 func Test_WriteHeadingMin(t *testing.T){
@@ -74,18 +78,10 @@ func Test_WriteHeading(t *testing.T){
 	defer template.Close();
 
 	var testFileWriter = FileWriter{template};
-	var testLine = "Test line";
+	var testLine = "Test heading line";
 	testFileWriter.WriteHeading(testLine, 1);
 	
-	fileContents, err := os.ReadFile(template.Name());
-
-	if err != nil {
-		t.Errorf("Unable to read file at directory %s", template.Name());
-	}
-
-	if (!strings.Contains(string(fileContents), testLine)){
-		t.Errorf("%s does not contain the line %s", template.Name(), "# " + testLine)
-	}
+	validateLine(t, template.Name(), testLine);
 }
 
 // TODO: Add case for WriteCodeBlock
