@@ -8,9 +8,9 @@ import (
 )
 
 func CreateTestFile(tempDir string) (*os.File, error) {
-	var filePath = path.Join(tempDir, "test.md");
-	var fileCreator = FileCreator{filePath: filePath};
-	template, err := os.Create(fileCreator.filePath);
+	var fileName = path.Join(tempDir, "test.md");
+	var fileCreator = FileCreator{fileName: fileName};
+	template, err := os.Create(fileCreator.fileName);
 	return template, err;
 }
 

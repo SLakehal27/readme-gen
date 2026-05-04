@@ -6,36 +6,54 @@ import (
 )
 
 type FileCreator struct {
-	filePath string
+	fileName string
 }
 
-func (f FileCreator) CreateTemplate() *os.File {
-	templateFile, err := os.Create(f.filePath);
+func (f FileCreator) CreateTemplateFile() *os.File {
+	templateFile, err := os.Create(f.fileName);
 	if err != nil { panic(err); }
-	fmt.Printf("Created README file : %s\n", templateFile.Name());
+	dir, dirErr := os.Getwd();
+	if dirErr != nil { panic(dirErr);}
+	fmt.Printf("Created %s at : %s\n", templateFile.Name(), dir);
 	return templateFile;
 }
 
 func(f FileCreator) WriteDefaultReadme(templateFile *os.File) {
 	var writer = FileWriter{templateFile: templateFile};
-	writer.WritePartialHeading("README Generator ", 1);
-	writer.WriteImageWithRedirect("readme-gen-pipeline", 
-	"https://github.com/SLakehal27/readme-gen/actions/workflows/pipeline.yml/badge.svg?branch=main",
-	"https://github.com/SLakehal27/readme-gen/actions");
 
-	writer.WriteLine("A simple README.md generator made in GoLang to generate README.md files for future GitHub projects.\n\n");
+	writer.WriteHeading("Project Title", 1);
+	writer.WriteLine("Simple overview of use/purpose.\n\n");
 
-	writer.WriteHeading("Why a README generator?", 2)
-	writer.WriteLine("Sure, there are other tools to help generate README files that are already implemented and others that use AI for it.");
-	writer.WriteLine("I see this project as a learning experience and an opportunity to make my own tooling with what I've learned so far.\n\n");
+	writer.WriteHeading("Description", 2);
+	writer.WriteLine("An in-depth paragraph about your project and overview of use.\n\n");
 
-	writer.WriteHeading("Usage", 2);
+	writer.WriteHeading("Getting Started", 2);
+
+	writer.WriteHeading("Dependencies", 3);
+	writer.WriteLine("- Describe any prerequisites, libraries, OS version, etc., needed before installing the program\n");
+	writer.WriteLine("- ex: Windows 10\n\n");
+
+	writer.WriteHeading("Installing", 3);
+	writer.WriteLine("- How/where to download your program\n")
+	writer.WriteLine("- Any modifications needed to be made to files/folders\n\n");
 
 	writer.WriteHeading("Execution", 3);
-	var runCmds = []string{"go run ."};
-	writer.WriteCodeBlock(runCmds, "");
+	writer.WriteLine("- How to run the program\n");
+	writer.WriteLine("- Step-by-step bullets\n");
+	writer.WriteCodeBlock([]string{"code blocks for commands"}, "");
+	
 
-	writer.WriteHeading("Testing", 3);
-	var testCmds = []string{"go test -cover -v"};
-	writer.WriteCodeBlock(testCmds, "");
+	writer.WriteHeading("Contribution", 2);
+	writer.WriteLine("Any advice for common problems or issues. \n\n");
+	writer.WriteCodeBlock([]string{"command to run if program contains helper info"}, "");
+
+	writer.WriteHeading("Authors", 2);
+	writer.WriteLine("Contributors names and contact info\n\n");
+	writer.WriteLine("ex. John Doe\n");
+	
+	writer.WriteHeading("License", 2);
+	writer.WriteLine("Contributors names and contact info.\n\n");
+
+	writer.WriteHeading("Acknowledgments", 2);
+	writer.WriteLine("Inspiration, code snippets, etc.\n\n");
 }
