@@ -11,10 +11,6 @@ type FileWriter struct {
 	templateFile *os.File
 }
 
-func (w FileWriter) WriteLine(str string) {
-	w.templateFile.WriteString(str)
-}
-
 func formatHeading(str string, headingType int) string {
 	var LOWER_HEADING_LIMIT = 1;
 	var UPPER_HEADING_LIMIT = 6;
@@ -28,25 +24,12 @@ func formatHeading(str string, headingType int) string {
 	return headings + " " + str;
 }
 
-func (w FileWriter) WritePartialHeading(str string, headingType int) {
-	w.WriteLine(formatHeading(str, headingType));
+func (w FileWriter) WriteLine(str string) {
+	w.templateFile.WriteString(str)
 }
 
 func (w FileWriter) WriteHeading(str string, headingType int) {
 	w.WriteLine(formatHeading(str, headingType) + "\n\n");
-}
-
-func formatURL(name string, url string) string {
-	return "[" + name + "]" + "(" + url + ")";
-}
-
-func (w FileWriter) WriteImage(name string, imageUrl string) {
-	w.WriteLine("!" + formatURL(name, imageUrl) + "\n\n");
-}
-
-func (w FileWriter) WriteImageWithRedirect(name string, imageUrl string, redirectUrl string) {
-	var imageLine = "!" + formatURL(name, imageUrl);
-	w.WriteLine(formatURL(imageLine, redirectUrl) + "\n\n");
 }
 
 func (w FileWriter) WriteCodeBlock(codeBlock []string, language string) {
@@ -56,4 +39,3 @@ func (w FileWriter) WriteCodeBlock(codeBlock []string, language string) {
 	}
 	w.WriteLine("```" + "\n\n");
 }
-
